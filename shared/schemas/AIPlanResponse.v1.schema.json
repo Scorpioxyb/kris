@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kris.app/schemas/AIPlanResponse.v1.schema.json",
+  "title": "AIPlanResponse.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "rationale", "cautions", "plan"],
+  "properties": {
+    "schema_version": {"const": "AIPlanResponse.v1"},
+    "rationale": {"type": "string", "minLength": 1, "maxLength": 1000},
+    "cautions": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 500}},
+    "plan": {"$ref": "#/$defs/plan"}
+  },
+  "$defs": {
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "estimated_minutes", "goal", "safety_gates", "exercises"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "estimated_minutes": {"type": "integer", "minimum": 10, "maximum": 120},
+        "goal": {"type": "string", "minLength": 1, "maxLength": 500},
+        "safety_gates": {"type": "array", "minItems": 1, "maxItems": 12, "items": {"type": "string", "maxLength": 500}},
+        "exercises": {"type": "array", "minItems": 1, "maxItems": 12, "items": {"$ref": "#/$defs/exercise"}}
+      }
+    },
+    "exercise": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "equipment_variant", "target_weight_kg", "sets", "target_reps", "rest_seconds", "notes", "alternative"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 100},
+        "equipment_variant": {"type": "string", "minLength": 1, "maxLength": 120},
+        "target_weight_kg": {"type": ["number", "null"], "minimum": 0, "maximum": 500},
+        "sets": {"type": "integer", "minimum": 1, "maximum": 10},
+        "target_reps": {"type": "integer", "minimum": 1, "maximum": 50},
+        "rest_seconds": {"type": "integer", "minimum": 0, "maximum": 600},
+        "notes": {"type": "array", "maxItems": 8, "items": {"type": "string", "maxLength": 300}},
+        "alternative": {"type": ["string", "null"], "maxLength": 200}
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleName</key>
+	<string>Kris</string>
+	<key>CFBundleDisplayName</key>
+	<string>Kris</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>WKApplication</key>
+	<true/>
+	<key>WKBackgroundModes</key>
+	<array>
+		<string>workout-processing</string>
+	</array>
+	<key>WKCompanionAppBundleIdentifier</key>
+	<string>com.albertdaisy.kriscoach</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>用于在训练中显示实时心率。</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>用于保存由 Apple Watch 实际记录的训练。</string>
+</dict>
+</plist>

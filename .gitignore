@@ -1,0 +1,45 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.playwright-cli/
+
+# Local coaching instructions and internal working notes.
+AGENTS.md
+COACHING_CHANGELOG.md
+GITHUB_FITNESS_BENCHMARK.md
+design-qa.md
+shared/plans/
+private/
+# Local visual prototype runtime; never ship it with the native product repository.
+design-workbench/
+
+# Generated reports, screenshots, logs, and local services.
+outputs/
+launchd/
+companion/.state/
+*.log
+
+# Local secrets and machine-specific configuration.
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*.mobileprovision
+*.sqlite
+*.sqlite3
+*.db
+Local.xcconfig
+*.local.xcconfig
+
+# Reproducible Xcode output and per-user state.
+native/.derived*/
+native/DerivedData/
+native/.obj*/
+native/native/
+native/build/
+xcuserdata/
+*.xcuserstate

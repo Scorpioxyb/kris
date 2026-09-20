@@ -1,0 +1,243 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1000000000000000000003F /* Contracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* Contracts.swift */; };
+		A10000000000000000000040 /* AIContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* AIContracts.swift */; };
+		A10000000000000000000041 /* AIDecisionContextBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* AIDecisionContextBuilder.swift */; };
+		A10000000000000000000042 /* ReadinessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000004 /* ReadinessEngine.swift */; };
+		A10000000000000000000043 /* HealthReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000005 /* HealthReducers.swift */; };
+		A10000000000000000000044 /* TrainingIntelligence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000006 /* TrainingIntelligence.swift */; };
+		A10000000000000000000045 /* PersistenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000007 /* PersistenceModels.swift */; };
+		A10000000000000000000046 /* WatchExecutionPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008 /* WatchExecutionPersistence.swift */; };
+		A10000000000000000000047 /* KrisCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000009 /* KrisCoachApp.swift */; };
+		A10000000000000000000048 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000A /* AppModel.swift */; };
+		A10000000000000000000049 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000B /* AIService.swift */; };
+		A1000000000000000000004A /* AIWireContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000C /* AIWireContracts.swift */; };
+		A1000000000000000000004B /* AIViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000D /* AIViews.swift */; };
+		A1000000000000000000004C /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000E /* KeychainStore.swift */; };
+		A1000000000000000000004D /* CompanionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000F /* CompanionClient.swift */; };
+		A1000000000000000000004E /* BonjourBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000010 /* BonjourBrowser.swift */; };
+		A1000000000000000000004F /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000011 /* HealthKitService.swift */; };
+		A10000000000000000000050 /* PhoneWatchConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* PhoneWatchConnectivity.swift */; };
+		A10000000000000000000051 /* MirroredWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* MirroredWorkoutCoordinator.swift */; };
+		A10000000000000000000052 /* WorkoutLiveActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* WorkoutLiveActivityController.swift */; };
+		A10000000000000000000053 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000015 /* DesignSystem.swift */; };
+		A10000000000000000000054 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000016 /* OnboardingView.swift */; };
+		A10000000000000000000055 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000017 /* Views.swift */; };
+		A10000000000000000000056 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* QRCodeScannerView.swift */; };
+		A10000000000000000000057 /* WorkoutActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* WorkoutActivityAttributes.swift */; };
+		A10000000000000000000058 /* Contracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* Contracts.swift */; };
+		A10000000000000000000059 /* AIContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* AIContracts.swift */; };
+		A1000000000000000000005A /* AIDecisionContextBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* AIDecisionContextBuilder.swift */; };
+		A1000000000000000000005B /* ReadinessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000004 /* ReadinessEngine.swift */; };
+		A1000000000000000000005C /* HealthReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000005 /* HealthReducers.swift */; };
+		A1000000000000000000005D /* TrainingIntelligence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000006 /* TrainingIntelligence.swift */; };
+		A1000000000000000000005E /* PersistenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000007 /* PersistenceModels.swift */; };
+		A1000000000000000000005F /* WatchExecutionPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008 /* WatchExecutionPersistence.swift */; };
+		A10000000000000000000060 /* KrisCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000009 /* KrisCoachApp.swift */; };
+		A10000000000000000000061 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000A /* AppModel.swift */; };
+		A10000000000000000000062 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000B /* AIService.swift */; };
+		A10000000000000000000063 /* AIWireContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000C /* AIWireContracts.swift */; };
+		A10000000000000000000064 /* AIViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000D /* AIViews.swift */; };
+		A10000000000000000000065 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000E /* KeychainStore.swift */; };
+		A10000000000000000000066 /* CompanionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000F /* CompanionClient.swift */; };
+		A10000000000000000000067 /* BonjourBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000010 /* BonjourBrowser.swift */; };
+		A10000000000000000000068 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000011 /* HealthKitService.swift */; };
+		A10000000000000000000069 /* PhoneWatchConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* PhoneWatchConnectivity.swift */; };
+		A1000000000000000000006A /* MirroredWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* MirroredWorkoutCoordinator.swift */; };
+		A1000000000000000000006B /* WorkoutLiveActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* WorkoutLiveActivityController.swift */; };
+		A1000000000000000000006C /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000015 /* DesignSystem.swift */; };
+		A1000000000000000000006D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000016 /* OnboardingView.swift */; };
+		A1000000000000000000006E /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000017 /* Views.swift */; };
+		A1000000000000000000006F /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* QRCodeScannerView.swift */; };
+		A10000000000000000000070 /* WorkoutActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* WorkoutActivityAttributes.swift */; };
+		A10000000000000000000071 /* Contracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* Contracts.swift */; };
+		A10000000000000000000072 /* WatchExecutionPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008 /* WatchExecutionPersistence.swift */; };
+		A10000000000000000000073 /* KrisCoachWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001A /* KrisCoachWatchApp.swift */; };
+		A10000000000000000000074 /* WatchAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001B /* WatchAppModel.swift */; };
+		A10000000000000000000075 /* WatchEventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001C /* WatchEventQueue.swift */; };
+		A10000000000000000000076 /* WatchExecutionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001D /* WatchExecutionStore.swift */; };
+		A10000000000000000000077 /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001E /* WorkoutManager.swift */; };
+		A10000000000000000000078 /* WatchViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001F /* WatchViews.swift */; };
+		A10000000000000000000079 /* WorkoutActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* WorkoutActivityAttributes.swift */; };
+		A1000000000000000000007A /* KrisLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* KrisLiveActivity.swift */; };
+		A1000000000000000000007B /* ReadinessEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000025 /* ReadinessEngineTests.swift */; };
+		A1000000000000000000007C /* AIDecisionPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000026 /* AIDecisionPipelineTests.swift */; };
+		A1000000000000000000007D /* AIDecisionPipelineIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000027 /* AIDecisionPipelineIntegrationTests.swift */; };
+		A1000000000000000000007E /* KrisCoachUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000028 /* KrisCoachUITests.swift */; };
+		A1000000000000000000007F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000029 /* PrivacyInfo.xcprivacy */; };
+		A10000000000000000000080 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002A /* Assets.xcassets */; };
+		A10000000000000000000081 /* readiness.v1.json in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002B /* readiness.v1.json */; };
+		A10000000000000000000082 /* readiness_golden.v1.json in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002C /* readiness_golden.v1.json */; };
+		A10000000000000000000083 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000029 /* PrivacyInfo.xcprivacy */; };
+		A10000000000000000000084 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002A /* Assets.xcassets */; };
+		A10000000000000000000085 /* readiness.v1.json in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002B /* readiness.v1.json */; };
+		A10000000000000000000086 /* readiness_golden.v1.json in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002C /* readiness_golden.v1.json */; };
+		A10000000000000000000087 /* TrainingPlan.sample.json in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002D /* TrainingPlan.sample.json */; };
+		A10000000000000000000088 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002A /* Assets.xcassets */; };
+		A10000000000000000000089 /* readiness.v1.json in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002B /* readiness.v1.json */; };
+		A1000000000000000000008A /* readiness_golden.v1.json in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002C /* readiness_golden.v1.json */; };
+		A100000000000000000000C2 /* Kris.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A1000000000000000000003B /* Kris.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A100000000000000000000C3 /* KrisLiveActivity.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A1000000000000000000003C /* KrisLiveActivity.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A100000000000000000000BA = {isa = PBXContainerItemProxy; containerPortal = A10000000000000000000038; proxyType = 1; remoteGlobalIDString = A100000000000000000000B6; remoteInfo = "KrisCoach Watch"; };
+		A100000000000000000000BC = {isa = PBXContainerItemProxy; containerPortal = A10000000000000000000038; proxyType = 1; remoteGlobalIDString = A100000000000000000000B7; remoteInfo = "KrisLiveActivity"; };
+		A100000000000000000000BE = {isa = PBXContainerItemProxy; containerPortal = A10000000000000000000038; proxyType = 1; remoteGlobalIDString = A100000000000000000000B5; remoteInfo = "KrisCoach Preview"; };
+		A100000000000000000000C0 = {isa = PBXContainerItemProxy; containerPortal = A10000000000000000000038; proxyType = 1; remoteGlobalIDString = A100000000000000000000B5; remoteInfo = "KrisCoach Preview"; };
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A1000000000000000000008E /* Embed Watch Content */ = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = "$(CONTENTS_FOLDER_PATH)/Watch"; dstSubfolderSpec = 16; files = (A100000000000000000000C2, ); name = "Embed Watch Content"; runOnlyForDeploymentPostprocessing = 0; };
+		A1000000000000000000008F /* Embed App Extensions */ = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = (A100000000000000000000C3, ); name = "Embed App Extensions"; runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A10000000000000000000001 /* Contracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contracts.swift"; sourceTree = "<group>"; };
+		A10000000000000000000002 /* AIContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIContracts.swift"; sourceTree = "<group>"; };
+		A10000000000000000000003 /* AIDecisionContextBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIDecisionContextBuilder.swift"; sourceTree = "<group>"; };
+		A10000000000000000000004 /* ReadinessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReadinessEngine.swift"; sourceTree = "<group>"; };
+		A10000000000000000000005 /* HealthReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthReducers.swift"; sourceTree = "<group>"; };
+		A10000000000000000000006 /* TrainingIntelligence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingIntelligence.swift"; sourceTree = "<group>"; };
+		A10000000000000000000007 /* PersistenceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistenceModels.swift"; sourceTree = "<group>"; };
+		A10000000000000000000008 /* WatchExecutionPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchExecutionPersistence.swift"; sourceTree = "<group>"; };
+		A10000000000000000000009 /* KrisCoachApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KrisCoachApp.swift"; sourceTree = "<group>"; };
+		A1000000000000000000000A /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppModel.swift"; sourceTree = "<group>"; };
+		A1000000000000000000000B /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIService.swift"; sourceTree = "<group>"; };
+		A1000000000000000000000C /* AIWireContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIWireContracts.swift"; sourceTree = "<group>"; };
+		A1000000000000000000000D /* AIViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIViews.swift"; sourceTree = "<group>"; };
+		A1000000000000000000000E /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainStore.swift"; sourceTree = "<group>"; };
+		A1000000000000000000000F /* CompanionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanionClient.swift"; sourceTree = "<group>"; };
+		A10000000000000000000010 /* BonjourBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BonjourBrowser.swift"; sourceTree = "<group>"; };
+		A10000000000000000000011 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKitService.swift"; sourceTree = "<group>"; };
+		A10000000000000000000012 /* PhoneWatchConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhoneWatchConnectivity.swift"; sourceTree = "<group>"; };
+		A10000000000000000000013 /* MirroredWorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MirroredWorkoutCoordinator.swift"; sourceTree = "<group>"; };
+		A10000000000000000000014 /* WorkoutLiveActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutLiveActivityController.swift"; sourceTree = "<group>"; };
+		A10000000000000000000015 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DesignSystem.swift"; sourceTree = "<group>"; };
+		A10000000000000000000016 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView.swift"; sourceTree = "<group>"; };
+		A10000000000000000000017 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views.swift"; sourceTree = "<group>"; };
+		A10000000000000000000018 /* QRCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QRCodeScannerView.swift"; sourceTree = "<group>"; };
+		A10000000000000000000019 /* KrisCoach.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KrisCoach.entitlements"; sourceTree = "<group>"; };
+		A1000000000000000000001A /* KrisCoachWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KrisCoachWatchApp.swift"; sourceTree = "<group>"; };
+		A1000000000000000000001B /* WatchAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchAppModel.swift"; sourceTree = "<group>"; };
+		A1000000000000000000001C /* WatchEventQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchEventQueue.swift"; sourceTree = "<group>"; };
+		A1000000000000000000001D /* WatchExecutionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchExecutionStore.swift"; sourceTree = "<group>"; };
+		A1000000000000000000001E /* WorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutManager.swift"; sourceTree = "<group>"; };
+		A1000000000000000000001F /* WatchViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchViews.swift"; sourceTree = "<group>"; };
+		A10000000000000000000020 /* KrisCoachWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KrisCoachWatch.entitlements"; sourceTree = "<group>"; };
+		A10000000000000000000021 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		A10000000000000000000022 /* WorkoutActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutActivityAttributes.swift"; sourceTree = "<group>"; };
+		A10000000000000000000023 /* KrisLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KrisLiveActivity.swift"; sourceTree = "<group>"; };
+		A10000000000000000000024 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		A10000000000000000000025 /* ReadinessEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReadinessEngineTests.swift"; sourceTree = "<group>"; };
+		A10000000000000000000026 /* AIDecisionPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIDecisionPipelineTests.swift"; sourceTree = "<group>"; };
+		A10000000000000000000027 /* AIDecisionPipelineIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIDecisionPipelineIntegrationTests.swift"; sourceTree = "<group>"; };
+		A10000000000000000000028 /* KrisCoachUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KrisCoachUITests.swift"; sourceTree = "<group>"; };
+		A10000000000000000000029 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PrivacyInfo.xcprivacy"; sourceTree = "<group>"; };
+		A1000000000000000000002A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		A1000000000000000000002B /* readiness.v1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "readiness.v1.json"; path = "../shared/rules/readiness.v1.json"; sourceTree = SOURCE_ROOT; };
+		A1000000000000000000002C /* readiness_golden.v1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "readiness_golden.v1.json"; path = "../shared/fixtures/readiness_golden.v1.json"; sourceTree = SOURCE_ROOT; };
+		A1000000000000000000002D /* TrainingPlan.sample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "TrainingPlan.sample.json"; path = "../shared/examples/TrainingPlan.sample.json"; sourceTree = SOURCE_ROOT; };
+		A10000000000000000000039 /* KrisCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KrisCoach.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000003A /* KrisCoach Preview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KrisCoach Preview.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000003B /* Kris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kris.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000003C /* KrisLiveActivity.appex */ = {isa = PBXFileReference; explicitFileType = wrapper.app-extension; includeInIndex = 0; path = "KrisLiveActivity.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000003D /* KrisCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KrisCoachTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000003E /* KrisCoachUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KrisCoachUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1000000000000000000008C = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000091 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000095 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000097 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A1000000000000000000009A = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A1000000000000000000009D = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1000000000000000000002E /* Shared */ = {isa = PBXGroup; children = (A10000000000000000000001, A10000000000000000000002, A10000000000000000000003, A10000000000000000000004, A10000000000000000000005, A10000000000000000000006, A10000000000000000000007, A10000000000000000000008, ); path = Shared; sourceTree = "<group>"; };
+		A1000000000000000000002F /* iPhone */ = {isa = PBXGroup; children = (A10000000000000000000009, A1000000000000000000000A, A1000000000000000000000B, A1000000000000000000000C, A1000000000000000000000D, A1000000000000000000000E, A1000000000000000000000F, A10000000000000000000010, A10000000000000000000011, A10000000000000000000012, A10000000000000000000013, A10000000000000000000014, A10000000000000000000015, A10000000000000000000016, A10000000000000000000017, A10000000000000000000018, A10000000000000000000019, ); path = iPhone; sourceTree = "<group>"; };
+		A10000000000000000000030 /* Watch */ = {isa = PBXGroup; children = (A1000000000000000000001A, A1000000000000000000001B, A1000000000000000000001C, A1000000000000000000001D, A1000000000000000000001E, A1000000000000000000001F, A10000000000000000000020, A10000000000000000000021, ); path = Watch; sourceTree = "<group>"; };
+		A10000000000000000000031 /* LiveActivity */ = {isa = PBXGroup; children = (A10000000000000000000022, A10000000000000000000023, A10000000000000000000024, ); path = LiveActivity; sourceTree = "<group>"; };
+		A10000000000000000000032 /* Tests */ = {isa = PBXGroup; children = (A10000000000000000000025, A10000000000000000000026, A10000000000000000000027, ); path = Tests; sourceTree = "<group>"; };
+		A10000000000000000000033 /* UITests */ = {isa = PBXGroup; children = (A10000000000000000000028, ); path = UITests; sourceTree = "<group>"; };
+		A10000000000000000000034 /* Resources */ = {isa = PBXGroup; children = (A10000000000000000000029, A1000000000000000000002A, ); path = Resources; sourceTree = "<group>"; };
+		A10000000000000000000035 = {isa = PBXGroup; children = (A1000000000000000000002B, A1000000000000000000002C, A1000000000000000000002D, ); name = "External Resources"; sourceTree = "<group>"; };
+		A10000000000000000000036 = {isa = PBXGroup; children = (A10000000000000000000039, A1000000000000000000003A, A1000000000000000000003B, A1000000000000000000003C, A1000000000000000000003D, A1000000000000000000003E, ); name = Products; sourceTree = "<group>"; };
+		A10000000000000000000037 = {isa = PBXGroup; children = (A1000000000000000000002E, A1000000000000000000002F, A10000000000000000000030, A10000000000000000000031, A10000000000000000000032, A10000000000000000000033, A10000000000000000000034, A10000000000000000000035, A10000000000000000000036, ); sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A100000000000000000000B4 /* KrisCoach */ = {isa = PBXNativeTarget; buildConfigurationList = A100000000000000000000A4; buildPhases = (A1000000000000000000008B, A1000000000000000000008C, A1000000000000000000008D, A1000000000000000000008E, A1000000000000000000008F, ); buildRules = (); dependencies = (A100000000000000000000BB, A100000000000000000000BD, ); name = KrisCoach; productName = KrisCoach; productReference = A10000000000000000000039; productType = "com.apple.product-type.application"; };
+		A100000000000000000000B5 /* KrisCoach Preview */ = {isa = PBXNativeTarget; buildConfigurationList = A100000000000000000000A7; buildPhases = (A10000000000000000000090, A10000000000000000000091, A10000000000000000000092, ); buildRules = (); dependencies = (); name = "KrisCoach Preview"; productName = "KrisCoach Preview"; productReference = A1000000000000000000003A; productType = "com.apple.product-type.application"; };
+		A100000000000000000000B6 /* KrisCoach Watch */ = {isa = PBXNativeTarget; buildConfigurationList = A100000000000000000000AA; buildPhases = (A10000000000000000000094, A10000000000000000000095, A10000000000000000000093, ); buildRules = (); dependencies = (); name = "KrisCoach Watch"; productName = "KrisCoach Watch"; productReference = A1000000000000000000003B; productType = "com.apple.product-type.application"; };
+		A100000000000000000000B7 /* KrisLiveActivity */ = {isa = PBXNativeTarget; buildConfigurationList = A100000000000000000000AD; buildPhases = (A10000000000000000000096, A10000000000000000000097, A10000000000000000000098, ); buildRules = (); dependencies = (); name = KrisLiveActivity; productName = KrisLiveActivity; productReference = A1000000000000000000003C; productType = "com.apple.product-type.app-extension"; };
+		A100000000000000000000B8 /* KrisCoachTests */ = {isa = PBXNativeTarget; buildConfigurationList = A100000000000000000000B0; buildPhases = (A10000000000000000000099, A1000000000000000000009A, A1000000000000000000009B, ); buildRules = (); dependencies = (A100000000000000000000BF, ); name = KrisCoachTests; productName = KrisCoachTests; productReference = A1000000000000000000003D; productType = "com.apple.product-type.bundle.unit-test"; };
+		A100000000000000000000B9 /* KrisCoachUITests */ = {isa = PBXNativeTarget; buildConfigurationList = A100000000000000000000B3; buildPhases = (A1000000000000000000009C, A1000000000000000000009D, A1000000000000000000009E, ); buildRules = (); dependencies = (A100000000000000000000C1, ); name = KrisCoachUITests; productName = KrisCoachUITests; productReference = A1000000000000000000003E; productType = "com.apple.product-type.bundle.ui-testing"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10000000000000000000038 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 2660; LastUpgradeCheck = 2660; TargetAttributes = {A100000000000000000000B4 = {CreatedOnToolsVersion = 26.0; DevelopmentTeam = DN45UAAJKP; }; A100000000000000000000B5 = {CreatedOnToolsVersion = 26.0; DevelopmentTeam = DN45UAAJKP; }; A100000000000000000000B6 = {CreatedOnToolsVersion = 26.0; DevelopmentTeam = DN45UAAJKP; }; A100000000000000000000B7 = {CreatedOnToolsVersion = 26.0; DevelopmentTeam = DN45UAAJKP; }; A100000000000000000000B8 = {CreatedOnToolsVersion = 26.0; TestTargetID = A100000000000000000000B5; }; A100000000000000000000B9 = {CreatedOnToolsVersion = 26.0; TestTargetID = A100000000000000000000B5; }; }; }; buildConfigurationList = A100000000000000000000A1; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base, "zh-Hans"); mainGroup = A10000000000000000000037; productRefGroup = A10000000000000000000036; projectDirPath = ""; projectRoot = ""; targets = (A100000000000000000000B4, A100000000000000000000B5, A100000000000000000000B6, A100000000000000000000B7, A100000000000000000000B8, A100000000000000000000B9); };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1000000000000000000008D = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A1000000000000000000007F, A10000000000000000000080, A10000000000000000000081, A10000000000000000000082, ); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000092 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000083, A10000000000000000000084, A10000000000000000000085, A10000000000000000000086, A10000000000000000000087, ); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000093 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000088, ); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000098 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A1000000000000000000009B = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000089, A1000000000000000000008A, ); runOnlyForDeploymentPostprocessing = 0; };
+		A1000000000000000000009E = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1000000000000000000008B = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A1000000000000000000003F, A10000000000000000000040, A10000000000000000000041, A10000000000000000000042, A10000000000000000000043, A10000000000000000000044, A10000000000000000000045, A10000000000000000000046, A10000000000000000000047, A10000000000000000000048, A10000000000000000000049, A1000000000000000000004A, A1000000000000000000004B, A1000000000000000000004C, A1000000000000000000004D, A1000000000000000000004E, A1000000000000000000004F, A10000000000000000000050, A10000000000000000000051, A10000000000000000000052, A10000000000000000000053, A10000000000000000000054, A10000000000000000000055, A10000000000000000000056, A10000000000000000000057, ); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000090 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000058, A10000000000000000000059, A1000000000000000000005A, A1000000000000000000005B, A1000000000000000000005C, A1000000000000000000005D, A1000000000000000000005E, A1000000000000000000005F, A10000000000000000000060, A10000000000000000000061, A10000000000000000000062, A10000000000000000000063, A10000000000000000000064, A10000000000000000000065, A10000000000000000000066, A10000000000000000000067, A10000000000000000000068, A10000000000000000000069, A1000000000000000000006A, A1000000000000000000006B, A1000000000000000000006C, A1000000000000000000006D, A1000000000000000000006E, A1000000000000000000006F, A10000000000000000000070, ); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000094 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000071, A10000000000000000000072, A10000000000000000000073, A10000000000000000000074, A10000000000000000000075, A10000000000000000000076, A10000000000000000000077, A10000000000000000000078, ); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000096 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000079, A1000000000000000000007A, ); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000099 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A1000000000000000000007B, A1000000000000000000007C, A1000000000000000000007D, ); runOnlyForDeploymentPostprocessing = 0; };
+		A1000000000000000000009C = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A1000000000000000000007E, ); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A100000000000000000000BB = {isa = PBXTargetDependency; target = A100000000000000000000B6; targetProxy = A100000000000000000000BA; };
+		A100000000000000000000BD = {isa = PBXTargetDependency; target = A100000000000000000000B7; targetProxy = A100000000000000000000BC; };
+		A100000000000000000000BF = {isa = PBXTargetDependency; target = A100000000000000000000B5; targetProxy = A100000000000000000000BE; };
+		A100000000000000000000C1 = {isa = PBXTargetDependency; target = A100000000000000000000B5; targetProxy = A100000000000000000000C0; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A1000000000000000000009F /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; SWIFT_VERSION = 6.0; SWIFT_STRICT_CONCURRENCY = complete; ENABLE_USER_SCRIPT_SANDBOXING = YES; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";}; name = Debug; };
+		A100000000000000000000A0 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; SWIFT_VERSION = 6.0; SWIFT_STRICT_CONCURRENCY = complete; ENABLE_USER_SCRIPT_SANDBOXING = YES; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; SWIFT_COMPILATION_MODE = wholemodule;}; name = Release; };
+		A100000000000000000000A2 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = DN45UAAJKP; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = iPhone/Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TARGETED_DEVICE_FAMILY = "1"; CODE_SIGN_ENTITLEMENTS = iPhone/KrisCoach.entitlements; ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; KRIS_AI_GATEWAY_URL = ""; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 9;}; name = Debug; };
+		A100000000000000000000A3 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = DN45UAAJKP; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = iPhone/Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TARGETED_DEVICE_FAMILY = "1"; CODE_SIGN_ENTITLEMENTS = iPhone/KrisCoach.entitlements; ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; KRIS_AI_GATEWAY_URL = ""; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 9;}; name = Release; };
+		A100000000000000000000A5 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = DN45UAAJKP; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = iPhone/Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.preview; PRODUCT_NAME = "KrisCoach Preview"; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TARGETED_DEVICE_FAMILY = "1"; CODE_SIGN_ENTITLEMENTS = iPhone/KrisCoach.entitlements; ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; KRIS_AI_GATEWAY_URL = ""; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 9; PRODUCT_MODULE_NAME = KrisCoach;}; name = Debug; };
+		A100000000000000000000A6 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = DN45UAAJKP; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = iPhone/Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.preview; PRODUCT_NAME = "KrisCoach Preview"; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TARGETED_DEVICE_FAMILY = "1"; CODE_SIGN_ENTITLEMENTS = iPhone/KrisCoach.entitlements; ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; KRIS_AI_GATEWAY_URL = ""; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 9; PRODUCT_MODULE_NAME = KrisCoach;}; name = Release; };
+		A100000000000000000000A8 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_ENTITLEMENTS = Watch/KrisCoachWatch.entitlements; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = DN45UAAJKP; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = Watch/Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.watchkitapp; PRODUCT_NAME = "Kris"; SDKROOT = watchos; WATCHOS_DEPLOYMENT_TARGET = 26.0; TARGETED_DEVICE_FAMILY = "4"; SKIP_INSTALL = YES; ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 9;}; name = Debug; };
+		A100000000000000000000A9 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_ENTITLEMENTS = Watch/KrisCoachWatch.entitlements; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = DN45UAAJKP; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = Watch/Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.watchkitapp; PRODUCT_NAME = "Kris"; SDKROOT = watchos; WATCHOS_DEPLOYMENT_TARGET = 26.0; TARGETED_DEVICE_FAMILY = "4"; SKIP_INSTALL = YES; ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 9;}; name = Release; };
+		A100000000000000000000AB /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {APPLICATION_EXTENSION_API_ONLY = YES; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = DN45UAAJKP; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = LiveActivity/Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.liveactivity; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TARGETED_DEVICE_FAMILY = "1"; SKIP_INSTALL = YES; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 9;}; name = Debug; };
+		A100000000000000000000AC /* Release */ = {isa = XCBuildConfiguration; buildSettings = {APPLICATION_EXTENSION_API_ONLY = YES; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = DN45UAAJKP; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = LiveActivity/Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.liveactivity; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TARGETED_DEVICE_FAMILY = "1"; SKIP_INSTALL = YES; MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 9;}; name = Release; };
+		A100000000000000000000AE /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.tests; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KrisCoach Preview.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KrisCoach Preview"; BUNDLE_LOADER = "$(TEST_HOST)"; PRODUCT_NAME = "$(TARGET_NAME)";}; name = Debug; };
+		A100000000000000000000AF /* Release */ = {isa = XCBuildConfiguration; buildSettings = {GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.tests; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KrisCoach Preview.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KrisCoach Preview"; BUNDLE_LOADER = "$(TEST_HOST)"; PRODUCT_NAME = "$(TARGET_NAME)";}; name = Release; };
+		A100000000000000000000B1 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.uitests; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TEST_TARGET_NAME = "KrisCoach Preview"; PRODUCT_NAME = "$(TARGET_NAME)";}; name = Debug; };
+		A100000000000000000000B2 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.albertdaisy.kriscoach.uitests; SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 26.0; TEST_TARGET_NAME = "KrisCoach Preview"; PRODUCT_NAME = "$(TARGET_NAME)";}; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A100000000000000000000A1 = {isa = XCConfigurationList; buildConfigurations = (A1000000000000000000009F, A100000000000000000000A0); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A100000000000000000000A4 = {isa = XCConfigurationList; buildConfigurations = (A100000000000000000000A2, A100000000000000000000A3); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A100000000000000000000A7 = {isa = XCConfigurationList; buildConfigurations = (A100000000000000000000A5, A100000000000000000000A6); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A100000000000000000000AA = {isa = XCConfigurationList; buildConfigurations = (A100000000000000000000A8, A100000000000000000000A9); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A100000000000000000000AD = {isa = XCConfigurationList; buildConfigurations = (A100000000000000000000AB, A100000000000000000000AC); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A100000000000000000000B0 = {isa = XCConfigurationList; buildConfigurations = (A100000000000000000000AE, A100000000000000000000AF); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A100000000000000000000B3 = {isa = XCConfigurationList; buildConfigurations = (A100000000000000000000B1, A100000000000000000000B2); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = A10000000000000000000038 /* Project object */;
+}

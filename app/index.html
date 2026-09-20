@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0c161a" />
+    <meta name="description" content="Kris 的个人恢复、训练与减脂决策面板" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/krislogo1.png" />
+    <link rel="apple-touch-icon" href="/krislogo1.png" />
+    <title>Kris</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <img class="brand-mark" src="/krislogo1.png" alt="Kris" />
+          <div>
+            <p class="eyebrow">PERSONAL PERFORMANCE OS</p>
+            <h1>Kris <span>教练中枢</span></h1>
+          </div>
+        </div>
+        <div class="top-actions">
+          <span id="sync-status" class="sync-status">正在读取</span>
+          <button id="refresh" class="icon-button" aria-label="重新读取数据" title="重新读取已生成的数据">↻</button>
+        </div>
+      </header>
+      <nav class="nav-tabs" aria-label="页面导航">
+        <a class="nav-link active" href="#today">今天</a>
+        <a class="nav-link" href="#trends">趋势</a>
+        <a class="nav-link" href="#training">训练</a>
+        <a class="nav-link" href="#monitor">监控</a>
+        <a class="nav-link" href="#nutrition">营养</a>
+      </nav>
+
+      <section class="hero-grid" id="today">
+        <article class="hero-card panel">
+          <div class="hero-heading">
+            <div>
+              <p class="eyebrow">TODAY / <span id="today-date">—</span></p>
+              <h2 id="readiness-label">准备度读取中</h2>
+              <p id="readiness-copy" class="muted">把健康信号、训练负荷和数据质量放在一起判断。</p>
+            </div>
+            <span id="day-status" class="status-chip">—</span>
+          </div>
+          <div class="readiness-row">
+            <div class="score-ring" id="score-ring" style="--score: 0">
+              <div class="score-inner"><strong id="readiness-score">—</strong><span>/100</span></div>
+            </div>
+            <div class="decision-copy">
+              <p class="eyebrow">DECISION</p>
+              <p id="decision-line">正在形成今日建议…</p>
+              <div class="mini-tags"><span id="confidence-tag">置信度 —</span><span id="quality-tag">数据质量 —</span></div>
+            </div>
+          </div>
+          <div class="hero-footer">
+            <span id="generated-at">快照 —</span>
+            <span class="dot-separator">·</span>
+            <span>本地优先，不上传</span>
+          </div>
+        </article>
+
+        <article class="next-action panel">
+          <div class="section-label"><span class="section-dot lime"></span>先做这件事</div>
+          <h3 id="plan-title">今日计划读取中…</h3>
+          <div class="plan-meta"><span id="plan-type">—</span><span id="plan-duration">—</span><span id="plan-status">待执行</span></div>
+          <div class="action-list" id="action-list"></div>
+          <details class="plan-context"><summary>为什么今天这样安排</summary><p id="plan-basis" class="muted">—</p></details>
+          <div class="guardrail" id="guardrail">训练前门槛读取中…</div>
+        </article>
+      </section>
+
+      <section class="metrics-grid" aria-label="今日关键指标">
+        <article class="metric-card panel"><div class="metric-top"><span class="metric-label">睡眠</span><span class="metric-icon">☾</span></div><strong id="sleep">—</strong><span id="sleep-note" class="metric-note">—</span></article>
+        <article class="metric-card panel"><div class="metric-top"><span class="metric-label">HRV · SDNN</span><span class="metric-icon">⌁</span></div><strong id="hrv">—</strong><span id="hrv-note" class="metric-note">—</span></article>
+        <article class="metric-card panel"><div class="metric-top"><span class="metric-label">静息心率</span><span class="metric-icon">♡</span></div><strong id="rhr">—</strong><span id="rhr-note" class="metric-note">—</span></article>
+        <article class="metric-card panel"><div class="metric-top"><span class="metric-label">最新晨起体测</span><span class="metric-icon">◌</span></div><strong id="body-weight">—</strong><span id="body-note" class="metric-note">—</span></article>
+        <article class="metric-card panel"><div class="metric-top"><span class="metric-label">今日步数</span><span class="metric-icon">⌁</span></div><strong id="steps">—</strong><span id="steps-note" class="metric-note">当天实时值</span></article>
+        <article class="metric-card panel"><div class="metric-top"><span class="metric-label">活动能量</span><span class="metric-icon">✦</span></div><strong id="active-kcal">—</strong><span id="active-note" class="metric-note">不直接吃回</span></article>
+      </section>
+
+      <section class="two-col" id="trends">
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><p class="eyebrow">BODY COMPOSITION</p><h3>体重与体脂</h3></div><span id="body-range" class="range-label">最近记录</span></div>
+          <div class="legend"><span><i class="legend-dot weight-dot"></i>体重 kg</span><span><i class="legend-dot fat-dot"></i>体脂 %</span></div>
+          <div id="body-chart" class="chart" role="img" aria-label="体重与体脂趋势图"></div>
+          <p id="body-disclaimer" class="chart-caption">只使用米家 S800 同口径记录；数据不足时不触发热量下调。</p>
+        </article>
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><p class="eyebrow">RECOVERY SIGNALS</p><h3>恢复信号</h3></div><span class="range-label">近 21 天</span></div>
+          <div class="legend"><span><i class="legend-dot sleep-dot"></i>睡眠 h</span><span><i class="legend-dot hrv-dot"></i>HRV ms</span></div>
+          <div id="health-chart" class="chart" role="img" aria-label="睡眠与 HRV 趋势图"></div>
+          <p class="chart-caption">HRV、睡眠与静息心率共同使用；单日变化不单独决定加量。</p>
+        </article>
+      </section>
+
+      <section class="training-section" id="training" aria-labelledby="training-title">
+        <div class="training-heading">
+          <div>
+            <p class="eyebrow">TRAINING INTELLIGENCE</p>
+            <h3 id="training-title">训练负荷与动作进阶</h3>
+          </div>
+          <div class="segmented-control" aria-label="训练负荷时间范围">
+            <button class="range-button active" type="button" data-training-range="14" aria-pressed="true">14 日</button>
+            <button class="range-button" type="button" data-training-range="42" aria-pressed="false">42 日</button>
+          </div>
+        </div>
+        <div class="training-overview">
+          <div class="load-visual">
+            <div class="load-legend" aria-label="训练负荷图例">
+              <span><i class="load-key daily"></i>每日负荷</span>
+              <span><i class="load-key short"></i>7 日短期</span>
+              <span><i class="load-key long"></i>42 日长期</span>
+            </div>
+            <div id="load-chart" class="load-chart" role="img" aria-label="训练负荷趋势图"></div>
+            <p class="chart-caption">负荷点是个人训练时长代理，不是疲劳或伤病风险分数。</p>
+          </div>
+          <aside class="load-summary" aria-label="当前训练负荷摘要">
+            <span id="load-state" class="training-state">读取中</span>
+            <div class="load-stat"><span>近 7 日累计（点）</span><strong id="load-7d">—</strong></div>
+            <div class="load-stat"><span>28 日折算周均（点）</span><strong id="load-28d">—</strong></div>
+            <div class="load-stat"><span>短期 / 长期（点）</span><strong id="load-ema">—</strong></div>
+            <div class="load-stat"><span>手表 VO₂ max 估算</span><div class="stat-value"><strong id="vo2max">—</strong><small>mL/kg·min</small></div></div>
+            <p id="load-model-note" class="load-model-note">—</p>
+          </aside>
+        </div>
+        <div class="progression-heading">
+          <div>
+            <h3>动作进阶</h3>
+            <p id="progression-summary">正在读取同器械动作记录</p>
+          </div>
+          <button id="progression-toggle" class="text-button" type="button" aria-expanded="false">显示全部</button>
+        </div>
+        <div class="progression-columns" aria-hidden="true">
+          <span>动作 / 器械</span><span>最近实绩</span><span>当前状态</span><span>下一步</span>
+        </div>
+        <div id="progression-list" class="progression-list"></div>
+      </section>
+
+      <section class="three-col" id="monitor">
+        <article class="panel insight-panel" id="nutrition">
+          <div class="panel-heading"><div><p class="eyebrow">WHY THIS DECISION</p><h3>判断依据</h3></div><span class="panel-number">01</span></div>
+          <div id="evidence-list" class="evidence-list"></div>
+        </article>
+        <article class="panel insight-panel">
+          <div class="panel-heading"><div><p class="eyebrow">DATA QUALITY</p><h3>数据完整度</h3></div><span id="quality-state" class="state-label">—</span></div>
+          <div class="quality-meter"><span id="quality-meter-fill"></span></div>
+          <p id="quality-summary" class="quality-summary">—</p>
+          <div id="gap-list" class="gap-list"></div>
+        </article>
+        <article class="panel insight-panel">
+          <div class="panel-heading"><div><p class="eyebrow">NUTRITION COVERAGE</p><h3>营养覆盖</h3></div><span class="panel-number">03</span></div>
+          <div id="nutrition-summary" class="nutrition-summary"></div>
+          <div id="nutrition-gaps" class="tag-cloud"></div>
+          <p class="chart-caption">库存不等于已摄入；缺少记录不诊断缺乏。</p>
+        </article>
+      </section>
+
+      <section class="panel methodology">
+        <div class="method-copy"><p class="eyebrow">COACHING ENGINE</p><h3>每一次建议都可解释、可回退</h3><p>这个面板只展示已经由本地教练管线生成的结果。规则会按连续数据和明确反馈版本化更新，不会因为一次体重、HRV 或手表热量波动就改写你的计划。</p></div>
+        <div class="method-pills"><span>个人基线</span><span>训练实绩</span><span>营养覆盖</span><span>数据质量</span></div>
+      </section>
+
+      <footer class="footer"><span>Kris V1.3.0</span><span>手动同步后点击右上角 ↻ 重新读取</span><span id="footer-source">—</span></footer>
+    </main>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="/app.js?v=1.3.0-final" defer></script>
+  </body>
+</html>

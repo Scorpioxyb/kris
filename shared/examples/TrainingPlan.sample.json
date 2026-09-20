@@ -1,0 +1,40 @@
+{
+  "schema_version": "TrainingPlan.v1",
+  "plan_id": "8b833af9-5ad7-4a99-99c7-2b3232b18d51",
+  "revision": 1,
+  "date": "2026-08-31",
+  "title": "下肢 A · 回归",
+  "estimated_minutes": 55,
+  "goal": "恢复正式下肢训练频率，保持腰盆稳定，不冲极限。",
+  "safety_gates": [
+    "腰骶、膝或髋疼痛超过 2/10 时停止对应动作。",
+    "出现放射痛、麻木、无力、胸痛、晕厥或明显呼吸困难时停止训练并及时就医。"
+  ],
+  "exercises": [
+    {
+      "exercise_id": "e061a846-f29a-42f1-8ef5-95a7ed6b96e6",
+      "order": 1,
+      "name": "45° 腿举",
+      "equipment_variant": "健身房 45° 腿举机",
+      "target_weight_kg": 80,
+      "sets": 3,
+      "target_reps": 12,
+      "rest_seconds": 120,
+      "notes": ["骨盆贴稳靠垫", "膝盖与脚尖同向"],
+      "alternative": "坐姿水平腿举"
+    },
+    {
+      "exercise_id": "37f6ed94-e4fb-43eb-93d4-b72a79fba665",
+      "order": 2,
+      "name": "坐姿腿弯举",
+      "equipment_variant": "坐姿腿弯举机",
+      "target_weight_kg": 35,
+      "sets": 3,
+      "target_reps": 12,
+      "rest_seconds": 90,
+      "notes": ["躯干保持稳定", "控制离心"],
+      "alternative": "俯卧腿弯举"
+    }
+  ],
+  "published_at": "2026-08-31T12:00:00+08:00"
+}

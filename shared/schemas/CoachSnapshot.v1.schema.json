@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kriscoach.local/schemas/CoachSnapshot.v1.schema.json",
+  "title": "CoachSnapshot.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "version", "generated_at", "readiness", "evidence", "data_gaps", "training_load", "progression", "trends"],
+  "properties": {
+    "schema_version": { "const": "CoachSnapshot.v1" },
+    "version": { "type": "integer", "minimum": 0 },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "readiness": {
+      "type": "object",
+      "required": ["score", "state", "label", "confidence", "safety_gate"],
+      "properties": {
+        "score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "state": { "enum": ["train_progress", "train_maintain", "train_reduce", "recover_or_light", "insufficient_data"] },
+        "label": { "type": "string" },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "safety_gate": { "enum": ["normal", "reduce", "stop_and_seek_care"] },
+        "components": { "type": "object" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["signal"],
+        "properties": {
+          "signal": { "type": "string", "minLength": 1 },
+          "value": { "type": ["number", "null"] },
+          "unit": { "type": ["string", "null"] },
+          "baseline": { "type": ["number", "null"] },
+          "delta": { "type": ["number", "null"] },
+          "delta_pct": { "type": ["number", "null"] },
+          "impact": { "type": ["string", "null"] },
+          "confidence": { "enum": ["high", "medium", "low", null] }
+        }
+      }
+    },
+    "data_gaps": { "type": "array", "items": { "type": "string" } },
+    "training_load": { "type": "object" },
+    "progression": { "type": "array", "items": { "type": "object" } },
+    "trends": {
+      "type": "object",
+      "properties": {
+        "training_load_7d": { "$ref": "#/$defs/trend_points" },
+        "training_load_42d": { "$ref": "#/$defs/trend_points" },
+        "readiness": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["date", "score", "state", "confidence"],
+            "properties": {
+              "date": { "type": "string", "minLength": 1 },
+              "score": { "type": "number", "minimum": 0, "maximum": 100 },
+              "state": { "enum": ["train_progress", "train_maintain", "train_reduce", "recover_or_light", "insufficient_data"] },
+              "confidence": { "enum": ["high", "medium", "low"] },
+              "source": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "recent_training": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "date", "title", "status", "source"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "date": { "type": "string", "minLength": 10 },
+          "title": { "type": "string", "minLength": 1 },
+          "duration_minutes": { "type": ["number", "null"], "minimum": 0 },
+          "active_kcal": { "type": ["number", "null"], "minimum": 0 },
+          "average_heart_rate": { "type": ["number", "null"], "minimum": 0 },
+          "maximum_heart_rate": { "type": ["number", "null"], "minimum": 0 },
+          "exercise_count": { "type": ["integer", "null"], "minimum": 0 },
+          "completed_set_count": { "type": ["integer", "null"], "minimum": 0 },
+          "status": { "type": "string" },
+          "source": { "type": "string" },
+          "synced_to_mac": { "type": ["boolean", "null"] }
+        }
+      }
+    },
+    "decision_trace": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["summary", "actions"],
+      "properties": {
+        "as_of": { "type": ["string", "null"] },
+        "summary": { "type": "string", "minLength": 1 },
+        "actions": { "type": "array", "items": { "type": "string" } },
+        "plan_basis": { "type": ["string", "null"] },
+        "adjustment_note": { "type": ["string", "null"] }
+      }
+    },
+    "current_plan": { "oneOf": [{ "$ref": "TrainingPlan.v1.schema.json" }, { "type": "null" }] }
+  },
+  "$defs": {
+    "trend_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["date", "value"],
+        "properties": {
+          "date": { "type": "string", "minLength": 1 },
+          "value": { "type": "number" }
+        }
+      }
+    }
+  }
+}

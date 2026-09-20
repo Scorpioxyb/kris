@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kriscoach.local/schemas/TrainingSession.v1.schema.json",
+  "title": "TrainingSession.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "session_id", "plan_id", "plan_revision", "started_at", "ended_at", "status", "exercise_results", "feedback"],
+  "properties": {
+    "schema_version": { "const": "TrainingSession.v1" },
+    "session_id": { "type": "string", "format": "uuid" },
+    "plan_id": { "type": "string", "format": "uuid" },
+    "plan_revision": { "type": "integer", "minimum": 1 },
+    "started_at": { "type": "string", "format": "date-time" },
+    "ended_at": { "type": "string", "format": "date-time" },
+    "status": { "enum": ["completed", "stopped_early", "cancelled"] },
+    "exercise_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["exercise_id", "name", "equipment_variant", "sets"],
+        "properties": {
+          "exercise_id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "equipment_variant": { "type": "string", "minLength": 1, "maxLength": 120 },
+          "planned": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "required": ["exercise_id", "name", "equipment_variant", "sets", "target_reps", "rest_seconds"],
+            "properties": {
+              "exercise_id": { "type": "string", "format": "uuid" },
+              "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+              "equipment_variant": { "type": "string", "minLength": 1, "maxLength": 120 },
+              "target_weight_kg": { "type": ["number", "null"], "minimum": 0, "maximum": 1000 },
+              "sets": { "type": "integer", "minimum": 1, "maximum": 20 },
+              "target_reps": { "type": "integer", "minimum": 0, "maximum": 500 },
+              "rest_seconds": { "type": "integer", "minimum": 0, "maximum": 600 }
+            }
+          },
+          "sets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["set_id", "set_number", "reps", "completed_at"],
+              "properties": {
+                "set_id": { "type": "string", "format": "uuid" },
+                "set_number": { "type": "integer", "minimum": 1 },
+                "weight_kg": { "type": ["number", "null"], "minimum": 0, "maximum": 1000 },
+                "reps": { "type": "integer", "minimum": 0, "maximum": 500 },
+                "completed_at": { "type": "string", "format": "date-time" },
+                "last_set_feeling": { "enum": ["easy", "appropriate", "very_hard", "form_breakdown", null] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "feedback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["energy", "target_muscle_response", "symptoms"],
+      "properties": {
+        "energy": { "enum": ["good", "normal", "slightly_tired", "exhausted", "not_recorded"] },
+        "target_muscle_response": { "enum": ["good", "weak", "not_recorded"] },
+        "symptoms": { "type": "string", "maxLength": 1000 },
+        "notes": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "watch_workout_uuid": { "type": ["string", "null"], "maxLength": 128 },
+    "workout": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "duration_seconds": { "type": "number", "minimum": 0 },
+        "active_kcal": { "type": ["number", "null"], "minimum": 0 },
+        "average_heart_rate": { "type": ["number", "null"], "minimum": 0 },
+        "maximum_heart_rate": { "type": ["number", "null"], "minimum": 0 }
+      }
+    }
+  }
+}

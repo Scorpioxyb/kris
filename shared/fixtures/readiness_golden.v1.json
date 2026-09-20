@@ -1,0 +1,66 @@
+{
+  "schema_version": "ReadinessGolden.v1",
+  "rule_version": "ReadinessRules.v1",
+  "cases": [
+    {
+      "name": "complete_high_progress",
+      "input": {
+        "sleep": 9.0, "sleep_baseline": 7.5,
+        "hrv": 70.0, "hrv_baseline": 50.0,
+        "rhr": 55.0, "rhr_baseline": 60.0,
+        "load_ratio": 1.0, "today_status": "final", "data_quality": "pass",
+        "baseline_days": 14, "history_counts": { "sleep": 14, "hrv": 14, "rhr": 14 },
+        "fresh": true, "pain": 0, "flags": []
+      },
+      "expected": { "score": 78.8, "state": "train_progress", "confidence": "high", "safety_gate": "normal" }
+    },
+    {
+      "name": "partial_maintain",
+      "input": {
+        "sleep": 8.2, "sleep_baseline": 7.5,
+        "hrv": 58.0, "hrv_baseline": 50.0,
+        "rhr": 58.0, "rhr_baseline": 60.0,
+        "load_ratio": 0.9, "today_status": "partial", "data_quality": "warning",
+        "baseline_days": 10, "history_counts": { "sleep": 10, "hrv": 8, "rhr": 8 },
+        "fresh": true, "pain": 0, "flags": []
+      },
+      "expected": { "score": 65.1, "state": "train_maintain", "confidence": "medium", "safety_gate": "normal" }
+    },
+    {
+      "name": "low_recovery_with_pain",
+      "input": {
+        "sleep": 5.8, "sleep_baseline": 7.5,
+        "hrv": 45.0, "hrv_baseline": 50.0,
+        "rhr": 66.0, "rhr_baseline": 60.0,
+        "load_ratio": 1.6, "today_status": "final", "data_quality": "pass",
+        "baseline_days": 14, "history_counts": { "sleep": 14, "hrv": 14, "rhr": 14 },
+        "fresh": true, "pain": 3, "flags": []
+      },
+      "expected": { "score": 33.0, "state": "recover_or_light", "confidence": "high", "safety_gate": "reduce" }
+    },
+    {
+      "name": "missing_signals",
+      "input": {
+        "sleep": null, "sleep_baseline": null,
+        "hrv": null, "hrv_baseline": null,
+        "rhr": null, "rhr_baseline": null,
+        "load_ratio": null, "today_status": "partial", "data_quality": "warning",
+        "baseline_days": 0, "history_counts": { "sleep": 0, "hrv": 0, "rhr": 0 },
+        "fresh": false, "pain": 0, "flags": []
+      },
+      "expected": { "score": null, "state": "insufficient_data", "confidence": "low", "safety_gate": "normal" }
+    },
+    {
+      "name": "emergency_flag_overrides_score",
+      "input": {
+        "sleep": 8.0, "sleep_baseline": 7.5,
+        "hrv": 55.0, "hrv_baseline": 50.0,
+        "rhr": 59.0, "rhr_baseline": 60.0,
+        "load_ratio": 1.0, "today_status": "final", "data_quality": "pass",
+        "baseline_days": 14, "history_counts": { "sleep": 14, "hrv": 14, "rhr": 14 },
+        "fresh": true, "pain": 1, "flags": ["radiating_back_pain"]
+      },
+      "expected": { "score": 62.0, "state": "train_maintain", "confidence": "high", "safety_gate": "stop_and_seek_care" }
+    }
+  ]
+}

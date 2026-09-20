@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kris.app/schemas/KrisAIPlanRequest.v1.schema.json",
+  "title": "KrisAIPlanRequest.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "client_request_id", "context"],
+  "properties": {
+    "schema_version": {"const": "KrisAIPlanRequest.v1"},
+    "client_request_id": {"type": "string", "format": "uuid"},
+    "context": {"$ref": "#/$defs/context"}
+  },
+  "$defs": {
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "feature", "locale", "generated_at", "user_input", "local_decision", "recent_confirmed_training", "progression_notes", "data_gaps"],
+      "properties": {
+        "schema_version": {"const": "AIRedactedPlanContext.v1"},
+        "feature": {"const": "training_plan_candidate"},
+        "locale": {"type": "string", "minLength": 2, "maxLength": 16},
+        "generated_at": {"type": "string", "format": "date-time"},
+        "user_input": {"$ref": "#/$defs/userInput"},
+        "readiness": {"anyOf": [{"$ref": "#/$defs/readiness"}, {"type": "null"}]},
+        "local_decision": {"$ref": "#/$defs/localDecision"},
+        "recent_confirmed_training": {"type": "array", "maxItems": 12, "items": {"$ref": "#/$defs/trainingSummary"}},
+        "current_plan": {"anyOf": [{"$ref": "#/$defs/currentPlan"}, {"type": "null"}]},
+        "progression_notes": {"$ref": "#/$defs/shortList"},
+        "data_gaps": {"type": "array", "maxItems": 16, "items": {"type": "string", "maxLength": 500}}
+      }
+    },
+    "userInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "objective", "available_minutes", "equipment", "notes", "symptoms"],
+      "properties": {
+        "date": {"type": "string", "format": "date"},
+        "objective": {"type": "string", "minLength": 1, "maxLength": 300},
+        "available_minutes": {"type": "integer", "minimum": 20, "maximum": 120},
+        "equipment": {"type": "string", "minLength": 1, "maxLength": 300},
+        "notes": {"type": "string", "maxLength": 1000},
+        "symptoms": {"enum": ["notReported", "noneReported", "limitingDiscomfort", "emergencyReported"]}
+      }
+    },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "confidence", "safety_gate"],
+      "properties": {
+        "score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "state": {"type": "string", "minLength": 1, "maxLength": 80},
+        "confidence": {"type": "string", "minLength": 1, "maxLength": 80},
+        "safety_gate": {"type": "string", "minLength": 1, "maxLength": 80}
+      }
+    },
+    "localDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "title", "summary", "evidence", "rollback_condition", "rule_version"],
+      "properties": {
+        "action": {"enum": ["needsPlan", "needsAssessment", "maintain", "reduce", "recovery", "stop"]},
+        "title": {"type": "string", "minLength": 1, "maxLength": 500},
+        "summary": {"type": "string", "minLength": 1, "maxLength": 500},
+        "evidence": {"type": "array", "maxItems": 20, "items": {"type": "string", "maxLength": 80}},
+        "rollback_condition": {"type": "string", "minLength": 1, "maxLength": 500},
+        "rule_version": {"type": "string", "minLength": 1, "maxLength": 500}
+      }
+    },
+    "trainingSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "title", "status"],
+      "properties": {
+        "date": {"type": "string", "format": "date"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "status": {"type": "string", "minLength": 1, "maxLength": 40},
+        "duration_minutes": {"type": ["integer", "null"], "minimum": 0, "maximum": 1440},
+        "completed_set_count": {"type": ["integer", "null"], "minimum": 0, "maximum": 200}
+      }
+    },
+    "currentPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "date", "revision", "exercise_prescriptions"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "date": {"type": "string", "format": "date"},
+        "revision": {"type": "integer", "minimum": 1},
+        "exercise_prescriptions": {"type": "array", "maxItems": 20, "items": {"type": "string", "maxLength": 500}}
+      }
+    },
+    "shortList": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 500}}
+  }
+}

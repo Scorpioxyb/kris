@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kris.app/schemas/AIRecommendation.v2.schema.json",
+  "title": "AIRecommendation.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "request_id", "recommendation_id", "context_id", "kind", "recommendation",
+    "reasons", "evidence_ids", "confidence", "uncertainties", "optional_adjustment", "alternatives",
+    "safety_considerations", "acknowledged_restriction_ids", "user_confirmation_required",
+    "inference_metadata"
+  ],
+  "properties": {
+    "schema_version": {"const": "AIRecommendation.v2"},
+    "request_id": {"type": "string", "format": "uuid"},
+    "recommendation_id": {"type": "string", "format": "uuid"},
+    "context_id": {"type": "string", "format": "uuid"},
+    "kind": {"enum": ["create_plan", "revise_plan", "replace_exercise", "adapt_equipment", "shorten_plan", "no_change", "decline_unsafe_request"]},
+    "recommendation": {
+      "oneOf": [
+        {"$ref": "#/$defs/candidateRecommendation"},
+        {"$ref": "#/$defs/noChangeRecommendation"},
+        {"$ref": "#/$defs/declineRecommendation"}
+      ]
+    },
+    "reasons": {
+      "type": "array", "minItems": 1, "maxItems": 12,
+      "items": {"$ref": "#/$defs/reason"}
+    },
+    "evidence_ids": {"$ref": "#/$defs/evidenceIds"},
+    "confidence": {"enum": ["low", "medium", "high"]},
+    "uncertainties": {
+      "type": "array", "maxItems": 12,
+      "items": {"$ref": "#/$defs/uncertainty"}
+    },
+    "optional_adjustment": {
+      "anyOf": [{"$ref": "#/$defs/adjustment"}, {"type": "null"}]
+    },
+    "alternatives": {
+      "type": "array", "maxItems": 2,
+      "items": {"$ref": "#/$defs/alternative"}
+    },
+    "safety_considerations": {
+      "type": "array", "maxItems": 12,
+      "items": {"$ref": "#/$defs/safetyConsideration"}
+    },
+    "acknowledged_restriction_ids": {"$ref": "#/$defs/restrictionIds"},
+    "user_confirmation_required": {"const": true},
+    "inference_metadata": {"$ref": "#/$defs/inferenceMetadata"}
+  },
+  "$defs": {
+    "candidateRecommendation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "candidate_plan"],
+      "properties": {
+        "type": {"const": "candidate_plan"},
+        "candidate_plan": {"$ref": "#/$defs/candidatePlan"}
+      }
+    },
+    "noChangeRecommendation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "message"],
+      "properties": {
+        "type": {"const": "no_change"},
+        "message": {"type": "string", "minLength": 1, "maxLength": 500}
+      }
+    },
+    "declineRecommendation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "message"],
+      "properties": {
+        "type": {"const": "decline_unsafe_request"},
+        "message": {"type": "string", "minLength": 1, "maxLength": 500}
+      }
+    },
+    "candidatePlan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["title", "estimated_minutes", "goal", "exercises"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "estimated_minutes": {"type": "integer", "minimum": 10, "maximum": 180},
+        "goal": {"type": "string", "minLength": 1, "maxLength": 500},
+        "exercises": {
+          "type": "array", "minItems": 1, "maxItems": 12,
+          "items": {"$ref": "#/$defs/exercise"}
+        }
+      }
+    },
+    "exercise": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "equipment_variant", "target_weight_kg", "sets", "target_reps", "rest_seconds", "notes", "alternative"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 100},
+        "equipment_variant": {"type": "string", "minLength": 1, "maxLength": 120},
+        "target_weight_kg": {"type": ["number", "null"], "minimum": 0, "maximum": 500},
+        "sets": {"type": "integer", "minimum": 1, "maximum": 10},
+        "target_reps": {"type": "integer", "minimum": 1, "maximum": 50},
+        "rest_seconds": {"type": "integer", "minimum": 0, "maximum": 600},
+        "notes": {"type": "array", "maxItems": 8, "items": {"type": "string", "minLength": 1, "maxLength": 300}},
+        "alternative": {"type": ["string", "null"], "minLength": 1, "maxLength": 200}
+      }
+    },
+    "reason": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "explanation", "evidence_ids"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1, "maxLength": 80},
+        "explanation": {"type": "string", "minLength": 1, "maxLength": 500},
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"}
+      }
+    },
+    "uncertainty": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "explanation", "evidence_ids", "data_gap_codes"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1, "maxLength": 80},
+        "explanation": {"type": "string", "minLength": 1, "maxLength": 500},
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"},
+        "data_gap_codes": {"type": "array", "maxItems": 12, "items": {"type": "string", "minLength": 1, "maxLength": 80}}
+      }
+    },
+    "adjustment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["trigger", "candidate_plan", "evidence_ids"],
+      "properties": {
+        "trigger": {"type": "string", "minLength": 1, "maxLength": 300},
+        "candidate_plan": {"$ref": "#/$defs/candidatePlan"},
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"}
+      }
+    },
+    "alternative": {
+      "type": "object", "additionalProperties": false,
+      "required": ["title", "when", "candidate_plan", "evidence_ids"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "when": {"type": "string", "minLength": 1, "maxLength": 300},
+        "candidate_plan": {"$ref": "#/$defs/candidatePlan"},
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"}
+      }
+    },
+    "safetyConsideration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "message", "evidence_ids", "restriction_ids"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1, "maxLength": 80},
+        "message": {"type": "string", "minLength": 1, "maxLength": 500},
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"},
+        "restriction_ids": {"$ref": "#/$defs/restrictionIds"}
+      }
+    },
+    "inferenceMetadata": {
+      "type": "object", "additionalProperties": false,
+      "required": ["provider", "model", "prompt_version", "generated_at"],
+      "properties": {
+        "provider": {"type": "string", "minLength": 1, "maxLength": 80},
+        "model": {"type": "string", "minLength": 1, "maxLength": 120},
+        "prompt_version": {"type": "string", "minLength": 1, "maxLength": 120},
+        "generated_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "evidenceId": {"type": "string", "pattern": "^ev_[A-Za-z0-9_-]{1,48}$"},
+    "restrictionId": {"type": "string", "pattern": "^sr_[A-Za-z0-9_-]{1,48}$"},
+    "evidenceIds": {
+      "type": "array", "maxItems": 32, "uniqueItems": true,
+      "items": {"$ref": "#/$defs/evidenceId"}
+    },
+    "restrictionIds": {
+      "type": "array", "maxItems": 20, "uniqueItems": true,
+      "items": {"$ref": "#/$defs/restrictionId"}
+    }
+  }
+}

@@ -1,0 +1,303 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kris.app/schemas/KrisAIPlanRequest.v2.schema.json",
+  "title": "KrisAIPlanRequest.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "client_request_id", "context"],
+  "properties": {
+    "schema_version": {"const": "KrisAIPlanRequest.v2"},
+    "client_request_id": {"type": "string", "format": "uuid"},
+    "context": {"$ref": "#/$defs/trainingContext"}
+  },
+  "$defs": {
+    "trainingContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "context_id", "feature", "locale", "generated_at", "expires_at",
+        "intent", "objective_health", "subjective_user", "training_history", "progression",
+        "safety", "current_plan", "evidence", "data_gaps"
+      ],
+      "properties": {
+        "schema_version": {"const": "TrainingContext.v2"},
+        "context_id": {"type": "string", "format": "uuid"},
+        "feature": {"const": "training_recommendation"},
+        "locale": {"type": "string", "minLength": 2, "maxLength": 16},
+        "generated_at": {"type": "string", "format": "date-time"},
+        "expires_at": {"type": "string", "format": "date-time"},
+        "intent": {"$ref": "#/$defs/userIntent"},
+        "objective_health": {"$ref": "#/$defs/objectiveHealth"},
+        "subjective_user": {"$ref": "#/$defs/subjectiveUser"},
+        "training_history": {"$ref": "#/$defs/trainingHistory"},
+        "progression": {"$ref": "#/$defs/progression"},
+        "safety": {"$ref": "#/$defs/safety"},
+        "current_plan": {"anyOf": [{"$ref": "#/$defs/currentPlan"}, {"type": "null"}]},
+        "evidence": {
+          "type": "array", "minItems": 1, "maxItems": 64,
+          "items": {"$ref": "#/$defs/evidence"}
+        },
+        "data_gaps": {
+          "type": "array", "maxItems": 20,
+          "items": {"$ref": "#/$defs/dataGap"}
+        }
+      }
+    },
+    "userIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intent_id", "kind", "requested_date", "objective", "available_minutes", "equipment",
+        "target_plan_revision", "target_exercise_ref", "requested_changes", "free_text"
+      ],
+      "properties": {
+        "intent_id": {"type": "string", "format": "uuid"},
+        "kind": {"enum": ["create_plan", "revise_plan", "replace_exercise", "adapt_equipment", "shorten_plan", "explain_recommendation"]},
+        "requested_date": {"type": "string", "format": "date"},
+        "objective": {"type": "string", "minLength": 1, "maxLength": 300},
+        "available_minutes": {"type": "integer", "minimum": 10, "maximum": 180},
+        "equipment": {
+          "type": "array", "minItems": 1, "maxItems": 24,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["name", "status"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1, "maxLength": 120},
+              "status": {"enum": ["available", "unavailable", "unknown"]}
+            }
+          }
+        },
+        "target_plan_revision": {"type": ["integer", "null"], "minimum": 1},
+        "target_exercise_ref": {"type": ["string", "null"], "minLength": 1, "maxLength": 80},
+        "requested_changes": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 300}},
+        "free_text": {"type": ["string", "null"], "maxLength": 1000}
+      }
+    },
+    "objectiveHealth": {
+      "type": "object", "additionalProperties": false,
+      "required": ["as_of", "evidence_ids"],
+      "properties": {
+        "as_of": {"type": "string", "format": "date-time"},
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"}
+      }
+    },
+    "subjectiveUser": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reported_at", "evidence_ids"],
+      "properties": {
+        "reported_at": {"type": "string", "format": "date-time"},
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"}
+      }
+    },
+    "trainingHistory": {
+      "type": "object", "additionalProperties": false,
+      "required": ["confirmed_session_evidence_ids", "observed_workout_evidence_ids"],
+      "properties": {
+        "confirmed_session_evidence_ids": {"$ref": "#/$defs/evidenceIds"},
+        "observed_workout_evidence_ids": {"$ref": "#/$defs/evidenceIds"}
+      }
+    },
+    "progression": {
+      "type": "object", "additionalProperties": false,
+      "required": ["rule_version", "exercise_decisions"],
+      "properties": {
+        "rule_version": {"type": "string", "minLength": 1, "maxLength": 100},
+        "exercise_decisions": {
+          "type": "array", "maxItems": 24,
+          "items": {"$ref": "#/$defs/progressionDecision"}
+        }
+      }
+    },
+    "progressionDecision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["exercise_ref", "disposition", "allowed_adjustment", "evidence_ids", "rollback_condition"],
+      "properties": {
+        "exercise_ref": {"type": "string", "minLength": 1, "maxLength": 80},
+        "disposition": {"enum": ["maintain", "increase_allowed", "hold", "reduce", "blocked", "insufficient_data"]},
+        "allowed_adjustment": {
+          "anyOf": [
+            {
+              "type": "object", "additionalProperties": false,
+              "required": ["type", "maximum_delta_kg"],
+              "properties": {
+                "type": {"const": "load_delta_kg"},
+                "maximum_delta_kg": {"type": "number", "minimum": 0, "maximum": 100}
+              }
+            },
+            {"type": "null"}
+          ]
+        },
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"},
+        "rollback_condition": {"type": "string", "minLength": 1, "maxLength": 500}
+      }
+    },
+    "safety": {
+      "type": "object", "additionalProperties": false,
+      "required": ["rule_version", "disposition", "evaluated_at", "expires_at", "restrictions"],
+      "properties": {
+        "rule_version": {"type": "string", "minLength": 1, "maxLength": 100},
+        "disposition": {"enum": ["allow", "constrain", "needs_user_input", "block"]},
+        "evaluated_at": {"type": "string", "format": "date-time"},
+        "expires_at": {"type": "string", "format": "date-time"},
+        "restrictions": {
+          "type": "array", "maxItems": 20,
+          "items": {"$ref": "#/$defs/safetyRestriction"}
+        }
+      }
+    },
+    "safetyRestriction": {
+      "type": "object", "additionalProperties": false,
+      "required": ["restriction_id", "rule_code", "severity", "constraint", "evidence_ids", "user_facing_message", "requires_acknowledgement"],
+      "properties": {
+        "restriction_id": {"$ref": "#/$defs/restrictionId"},
+        "rule_code": {"type": "string", "minLength": 1, "maxLength": 100},
+        "severity": {"enum": ["info", "caution", "hard_stop"]},
+        "constraint": {"$ref": "#/$defs/safetyConstraint"},
+        "evidence_ids": {"$ref": "#/$defs/evidenceIds"},
+        "user_facing_message": {"type": "string", "minLength": 1, "maxLength": 500},
+        "requires_acknowledgement": {"type": "boolean"}
+      }
+    },
+    "safetyConstraint": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": {"enum": ["prohibit_training", "prohibit_load_increase", "reduce_volume", "exclude_exercise", "exclude_equipment", "require_symptom_confirmation", "recovery_only"]},
+        "exercise_ref": {"type": "string", "minLength": 1, "maxLength": 80},
+        "equipment_ref": {"type": "string", "minLength": 1, "maxLength": 120},
+        "maximum_delta_kg": {"type": "number", "minimum": 0, "maximum": 100},
+        "maximum_sets": {"type": "integer", "minimum": 0, "maximum": 100}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"type": {"const": "exclude_exercise"}}},
+          "then": {"required": ["exercise_ref"], "not": {"required": ["equipment_ref"]}}
+        },
+        {
+          "if": {"properties": {"type": {"const": "exclude_equipment"}}},
+          "then": {"required": ["equipment_ref"], "not": {"required": ["exercise_ref"]}}
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence_id", "category", "origin", "observed_at", "quality", "payload"],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/evidenceId"},
+        "category": {"enum": ["objective_measurement", "user_reported_fact", "confirmed_training_result", "device_observation", "deterministic_assessment", "missing_signal"]},
+        "origin": {"enum": ["healthkit_aggregate", "user_report", "kris_session", "healthkit_workout", "local_rule", "current_plan"]},
+        "observed_at": {"type": ["string", "null"], "format": "date-time"},
+        "quality": {"enum": ["confirmed", "partial", "stale", "missing"]},
+        "payload": {
+          "oneOf": [
+            {"$ref": "#/$defs/quantityEvidence"},
+            {"$ref": "#/$defs/categoricalEvidence"},
+            {"$ref": "#/$defs/setPerformanceEvidence"},
+            {"$ref": "#/$defs/missingSignalEvidence"},
+            {"$ref": "#/$defs/ruleResultEvidence"}
+          ]
+        }
+      }
+    },
+    "quantityEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "metric", "value", "unit"],
+      "properties": {
+        "type": {"const": "quantity"}, "metric": {"$ref": "#/$defs/metric"},
+        "value": {"type": "number", "minimum": -100000, "maximum": 100000},
+        "unit": {"enum": ["minute", "millisecond", "bpm", "count", "kg", "kcal", "percent"]}
+      }
+    },
+    "categoricalEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "metric", "value"],
+      "properties": {
+        "type": {"const": "categorical"}, "metric": {"$ref": "#/$defs/metric"},
+        "value": {"type": "string", "minLength": 1, "maxLength": 120}
+      }
+    },
+    "setPerformanceEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "exercise", "equipment_variant", "weight_kg", "reps"],
+      "properties": {
+        "type": {"const": "set_performance"},
+        "exercise": {"type": "string", "minLength": 1, "maxLength": 100},
+        "equipment_variant": {"type": "string", "minLength": 1, "maxLength": 120},
+        "weight_kg": {"type": ["number", "null"], "minimum": 0, "maximum": 1000},
+        "reps": {"type": "array", "minItems": 1, "maxItems": 20, "items": {"type": "integer", "minimum": 0, "maximum": 500}}
+      }
+    },
+    "missingSignalEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "signal", "reason"],
+      "properties": {
+        "type": {"const": "missing_signal"},
+        "signal": {"$ref": "#/$defs/metric"},
+        "reason": {"type": "string", "minLength": 1, "maxLength": 300}
+      }
+    },
+    "ruleResultEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "rule_code", "outcome", "input_evidence_ids"],
+      "properties": {
+        "type": {"const": "rule_result"},
+        "rule_code": {"type": "string", "minLength": 1, "maxLength": 100},
+        "outcome": {"type": "string", "minLength": 1, "maxLength": 120},
+        "input_evidence_ids": {"$ref": "#/$defs/evidenceIds"}
+      }
+    },
+    "currentPlan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["plan_ref", "revision", "date", "title", "estimated_minutes", "goal", "exercises"],
+      "properties": {
+        "plan_ref": {"type": "string", "minLength": 1, "maxLength": 80},
+        "revision": {"type": "integer", "minimum": 1},
+        "date": {"type": "string", "format": "date"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "estimated_minutes": {"type": "integer", "minimum": 1, "maximum": 300},
+        "goal": {"type": "string", "maxLength": 500},
+        "exercises": {"type": "array", "minItems": 1, "maxItems": 40, "items": {"$ref": "#/$defs/currentExercise"}}
+      }
+    },
+    "currentExercise": {
+      "type": "object", "additionalProperties": false,
+      "required": ["exercise_ref", "name", "equipment_variant", "target_weight_kg", "sets", "target_reps", "rest_seconds"],
+      "properties": {
+        "exercise_ref": {"type": "string", "minLength": 1, "maxLength": 80},
+        "name": {"type": "string", "minLength": 1, "maxLength": 100},
+        "equipment_variant": {"type": "string", "minLength": 1, "maxLength": 120},
+        "target_weight_kg": {"type": ["number", "null"], "minimum": 0, "maximum": 1000},
+        "sets": {"type": "integer", "minimum": 1, "maximum": 20},
+        "target_reps": {"type": "integer", "minimum": 1, "maximum": 200},
+        "rest_seconds": {"type": "integer", "minimum": 0, "maximum": 900}
+      }
+    },
+    "dataGap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "field", "status", "message"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1, "maxLength": 80},
+        "field": {
+          "type": "string", "minLength": 1, "maxLength": 120,
+          "not": {"$ref": "#/$defs/forbiddenDerivedScoreName"}
+        },
+        "status": {"enum": ["missing", "partial", "stale"]},
+        "message": {"type": "string", "minLength": 1, "maxLength": 300}
+      }
+    },
+    "metric": {
+      "type": "string", "minLength": 1, "maxLength": 80,
+      "not": {"$ref": "#/$defs/forbiddenDerivedScoreName"}
+    },
+    "forbiddenDerivedScoreName": {
+      "type": "string",
+      "pattern": "^(?:[Rr][Ee][Aa][Dd][Ii][Nn][Ee][Ss][Ss](?:[_-]?[Ss][Cc][Oo][Rr][Ee])?|[Rr][Ee][Cc][Oo][Vv][Ee][Rr][Yy](?:[_-]?[Ss][Cc][Oo][Rr][Ee])?|[Ss][Tt][Aa][Tt][Uu][Ss][_-]?[Ss][Cc][Oo][Rr][Ee]|[Bb][Oo][Dd][Yy](?:[_-]?[Ss][Tt][Aa][Tt][Ee])?[_-]?[Ss][Cc][Oo][Rr][Ee])$"
+    },
+    "evidenceId": {"type": "string", "pattern": "^ev_[A-Za-z0-9_-]{1,48}$"},
+    "restrictionId": {"type": "string", "pattern": "^sr_[A-Za-z0-9_-]{1,48}$"},
+    "evidenceIds": {
+      "type": "array", "maxItems": 32, "uniqueItems": true,
+      "items": {"$ref": "#/$defs/evidenceId"}
+    }
+  }
+}

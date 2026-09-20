@@ -1,0 +1,36 @@
+{
+  "schema_version": "ReadinessRules.v1",
+  "algorithm": "weighted_personal_baseline_v1",
+  "weights": { "sleep": 0.45, "hrv": 0.25, "rhr": 0.15, "load": 0.15 },
+  "component_scales": { "sleep": 22.0, "hrv": 1.6, "rhr": -1.5 },
+  "neutral_score": 50.0,
+  "load": {
+    "low_ratio": 0.5,
+    "high_ratio": 1.5,
+    "low_score": 68.0,
+    "center_score": 82.0,
+    "center_penalty": 20.0,
+    "high_start_score": 75.0,
+    "high_penalty": 35.0
+  },
+  "thresholds": [
+    { "minimum": 78.0, "state": "train_progress", "label": "可推进" },
+    { "minimum": 62.0, "state": "train_maintain", "label": "可训练，维持负荷" },
+    { "minimum": 45.0, "state": "train_reduce", "label": "可训练，但降阶" },
+    { "minimum": 0.0, "state": "recover_or_light", "label": "恢复优先" }
+  ],
+  "confidence": {
+    "high_baseline_days": 14,
+    "medium_baseline_days": 7,
+    "minimum_history_count": 5,
+    "high_complete_components": 3,
+    "medium_complete_components": 2
+  },
+  "safety": {
+    "reduce_pain_at_or_above": 3,
+    "emergency_flags": [
+      "chest_pain", "syncope", "marked_dyspnea", "abnormal_palpitations",
+      "radiating_back_pain", "numbness", "weakness", "bowel_bladder_change"
+    ]
+  }
+}

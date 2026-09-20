@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HealthData locale="zh_CN">
+  <Record type="HKCategoryTypeIdentifierSleepAnalysis" sourceName="Regression Watch" sourceVersion="1" unit="" creationDate="2026-09-01 13:52:05 +0800" startDate="2026-09-01 06:00:00 +0800" endDate="2026-09-01 09:59:00 +0800" value="HKCategoryValueSleepAnalysisAsleepCore" />
+  <Record type="HKCategoryTypeIdentifierSleepAnalysis" sourceName="Regression Watch" sourceVersion="1" unit="" creationDate="2026-09-01 13:52:05 +0800" startDate="2026-09-01 10:00:00 +0800" endDate="2026-09-01 13:00:00 +0800" value="HKCategoryValueSleepAnalysisAsleepCore" />
+  <Record type="HKCategoryTypeIdentifierSleepAnalysis" sourceName="Regression Watch" sourceVersion="1" unit="" creationDate="2026-09-01 16:30:00 +0800" startDate="2026-09-01 15:00:00 +0800" endDate="2026-09-01 16:30:00 +0800" value="HKCategoryValueSleepAnalysisAsleepCore" />
+</HealthData>

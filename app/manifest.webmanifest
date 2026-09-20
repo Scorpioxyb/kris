@@ -1,0 +1,18 @@
+{
+  "name": "Kris",
+  "short_name": "Kris",
+  "description": "Kris 的个人恢复、训练与减脂决策面板",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1417",
+  "theme_color": "#0c161a",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/krislogo1.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

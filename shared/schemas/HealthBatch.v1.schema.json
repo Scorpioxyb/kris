@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kriscoach.local/schemas/HealthBatch.v1.schema.json",
+  "title": "HealthBatch.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "batch_id", "device_id", "created_at", "samples", "coverage"],
+  "properties": {
+    "schema_version": { "const": "HealthBatch.v1" },
+    "batch_id": { "type": "string", "format": "uuid" },
+    "device_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "anchor": { "type": ["string", "null"], "maxLength": 16384 },
+    "samples": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sample_uuid", "metric", "start_at", "end_at", "value", "unit", "source"],
+        "properties": {
+          "sample_uuid": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "metric": {
+            "enum": [
+              "sleep", "hrv_sdnn", "resting_heart_rate", "step_count",
+              "active_energy", "basal_energy", "body_mass", "body_fat_percentage",
+              "lean_body_mass", "bmi", "vo2_max", "workout"
+            ]
+          },
+          "start_at": { "type": "string", "format": "date-time" },
+          "end_at": { "type": "string", "format": "date-time" },
+          "value": { "type": "number" },
+          "unit": { "type": "string", "minLength": 1, "maxLength": 32 },
+          "source": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "metadata": { "type": "object" }
+        }
+      }
+    },
+    "coverage": {
+      "type": "array",
+      "maxItems": 1000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["date", "metric", "status"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "metric": { "type": "string", "minLength": 1, "maxLength": 64 },
+          "status": { "enum": ["complete", "partial", "denied", "unavailable"] },
+          "reason": { "type": ["string", "null"], "maxLength": 500 }
+        }
+      }
+    }
+  }
+}

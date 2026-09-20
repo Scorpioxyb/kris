@@ -1,0 +1,22 @@
+// Bump the shell cache whenever static chart code changes so an installed PWA
+// does not keep rendering a previous chart implementation.
+const CACHE = "kris-v1-3-1";
+const SHELL = ["/", "/index.html", "/styles.css", "/app.js", "/manifest.webmanifest", "/krislogo1.png"];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))));
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", (event) => {
+  if (new URL(event.request.url).pathname.startsWith("/api/")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
+});
