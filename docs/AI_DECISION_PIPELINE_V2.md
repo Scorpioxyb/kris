@@ -1,29 +1,31 @@
 # Kris Coach AI Decision Pipeline V2
 
-状态：开发态 V2 已实现并通过自动化验证；生产 AI 尚未接入  
+状态：开发态 V2 核心链路已实现并有环节级集成验证；V2 UI 自动化和单条端到端全闭环待补；生产 AI 尚未接入  
 基线日期：2026-09-20  
 适用范围：iPhone App、本地规则、AI Gateway、训练候选审核、Watch 执行与训练结果回流
 
 ## 1. 文档边界
 
-本文定义 Kris Coach AI 决策链路的数据契约、权限边界、失败处理和发布验收标准，也记录 2026-09-20 开发态实现的验收结果。这里的“已实现”只表示 provider-neutral V2、deterministic Stub Provider、本地审核与训练结果闭环已经在当前工作区通过自动化验证，不表示真实模型、生产认证或真机发布已经完成。
+本文定义 Kris Coach AI 决策链路的数据契约、权限边界、失败处理和发布验收标准，也记录 2026-09-20 开发态实现的验收结果。这里的“已实现”只表示 provider-neutral V2、deterministic Stub Provider、本地 validation/persistence 与训练结果回流各环节已有代码和集成测试证据。它不表示 V2 审核页的交互自动化、从 Stub 生成到未来 context 的单条端到端测试、真实模型、生产认证或真机发布已经完成。
 
 术语状态：
 
-- `开发态已实现`：可由 2026-09-20 工作区代码和自动化测试直接证明。
+- `开发态已实现`：可由 2026-09-20 工作区代码和环节级单元/集成测试证明；具体 UI 和端到端验收状态以第 10 节为准。
 - `生产待办`：接入真实 Provider 或正式发布前仍需实现。
 - `待真机验证`：已有代码或模拟器证据，但缺少 iPhone/Apple Watch 真机端到端证据。
 
 开发态已实现：
 
-- `UserIntent -> TrainingContext.v2 -> AIRecommendation.v2 -> TrainingPlanCandidate.v2 -> UserDecision -> TrainingPlan -> TrainingSessionContract` 已连通。
+- `UserIntent -> TrainingContext.v2 -> AIRecommendation.v2 -> TrainingPlanCandidate.v2 -> UserDecision -> TrainingPlan -> TrainingSessionContract` 各代码环节已连通，并有分段集成测试；尚未用单条端到端用例覆盖整条链路。
 - objective health、subjective feedback、confirmed training、observed workout、deterministic rule 和 AI inference 使用不同类型或 provenance 表达。
 - V2 wire request 不包含 readiness/recovery/body-state score、HealthKit UUID、设备名、数据源名或原始样本时间序列。
 - 本地 validator 会检查 evidence 引用、missing/unknown、safety restriction、progression permission、器械、时长、计划结构和采用时新鲜度。
-- 候选的查看、编辑、采用和拒绝已落地；计划与 candidate 采用为原子保存，失败会回滚。
+- 候选的查看、编辑、采用和拒绝界面及模型操作已落地；计划与 candidate 采用为原子保存，失败会回滚。V2 审核交互仍待专门 UI 自动化验收。
 - 已确认训练结果会以实际 `weight x reps` 的 `set_performance` evidence 回流；HealthKit workout 仍保持为独立 observation。
 - V1 candidate 继续可解码、查看和拒绝，但不能通过旧路径直接发布。
 - Gateway V2 使用严格 request/provider schema、evidence 引用验证、错误分类、开发期 HMAC、进程内限流/幂等和 deterministic Stub Provider；production mode fail closed。
+
+开发态验收待办包括：V2 review/edit/accept/reject 的专门 UI 自动化，以及从 Stub 生成、用户决定、训练执行到未来 context 回流的单条端到端测试。
 
 生产待办包括：真实 Provider、Provider timeout/cancellation/circuit breaker、App Attest 或可撤销短期会话、共享限流与幂等存储、标准 CI/Linux 回归，以及 iPhone + Apple Watch 真机端到端验收。
 
@@ -44,23 +46,25 @@
 
 ## 3. V2 数据分层
 
+本节以当前 Swift domain model 为准。Gateway wire schema 使用对应的 `snake_case` 字段；产品概念名若与实现名不同，会在文中明确说明，不把未落地的目标字段当作当前契约。
+
 ### 3.1 UserIntent
 
 `UserIntent` 表达用户这次希望系统处理什么，而不是模型推测的目标。
 
-建议字段：
+当前实现字段：
 
 - `intentId`
 - `kind`：`createPlan`、`revisePlan`、`replaceExercise`、`adaptToEquipment`、`shortenPlan`、`explainRecommendation`
 - `requestedDate`
 - `objective`
 - `availableMinutes`
-- `equipmentAvailability[]`
+- `equipment[]`：元素为 `EquipmentAvailability(name, status)`
 - `targetPlanId?`
 - `targetPlanRevision?`
 - `requestedExerciseId?`
 - `requestedChanges[]`
-- `freeText?`
+- `notes?`
 
 `availableMinutes = 30`、某器械不可用、只换一个动作都必须进入结构化字段，不能只埋在备注中。
 
@@ -68,7 +72,7 @@
 
 `TrainingContext` 是一次推荐请求的不可变、带有效期快照。
 
-建议字段：
+当前实现字段：
 
 - `schemaVersion = TrainingContext.v2`
 - `contextId`
@@ -88,7 +92,7 @@
 
 ### 3.3 ObjectiveHealthContext
 
-只容纳设备测量或经确定性聚合得到的客观字段，例如：
+`ObjectiveHealthContext` 当前只保存 `asOf` 和 `evidenceIds[]`；具体客观信号作为 `Evidence` 存储并通过 ID 引用。这些信号包括：
 
 - 睡眠区间或总时长及覆盖质量；
 - HRV、静息心率及同口径个人基线差异；
@@ -99,7 +103,7 @@
 
 ### 3.4 SubjectiveUserContext
 
-只容纳用户主动报告的事实和偏好，例如：
+`SubjectiveUserContext` 当前只保存 `reportedAt` 和 `evidenceIds[]`；用户主动报告的事实和偏好作为 `Evidence` 存储并通过 ID 引用，例如：
 
 - `userReportedEnergy`
 - `fatigue`
@@ -122,16 +126,13 @@
 
 ### 3.6 ProgressionContext
 
-复用现有 gated double progression 的原则，V2 将字符串状态升级为类型化结论：
+复用现有 gated double progression 的原则。当前 `ProgressionContext` 包含 `ruleVersion` 和 `permissions[]`，每个 `ProgressionPermission` 包含：
 
-- `exerciseIdentity`
+- `exerciseName`
 - `equipmentVariant`
-- `state`
-- `permission`：例如 `hold`、`addRepetitions`、`increaseSmallestStep`
-- `allowedChange?`
+- `allowsLoadIncrease`
+- `maximumWeightKg?`
 - `evidenceIds[]`
-- `ruleVersion`
-- `rollbackCondition`
 
 只有同器械、同方案连续两次全部达到次数上限，且两次均有“轻松/合适”反馈，才允许最小档加重。主观“今天状态很好”或单个健康信号不能创建进阶许可。
 
@@ -145,16 +146,17 @@
 - `evaluatedAt`
 - `expiresAt`
 
-每个 `SafetyRestriction` 至少包含：
+每个 `SafetyRestriction` 当前包含：
 
-- `restrictionId`
-- `ruleCode`
+- `id`
+- `kind`
 - `severity`
-- `constraint`
 - `evidenceIds[]`
-- `userFacingMessage`
+- `authority = localRule`
+- `message`
+- `subject?`
 
-约束类型至少支持：`prohibitTraining`、`prohibitLoadIncrease`、`reduceVolume`、`excludeExercise`、`requireSymptomConfirmation`、`recoveryOnly`。
+当前约束类型为：`prohibitTraining`、`prohibitUnapprovedLoadIncrease`、`excludeExercise`、`prohibitEquipment`、`requireSymptomConfirmation`、`recoveryOnly`。减量可以作为经本地限制后的候选调整表达，但当前不是独立的 `SafetyRestrictionKind`。
 
 AI 只能返回自己确认遵守的 `acknowledgedRestrictionIds`，不能新增、删除或降级本地 restriction。
 
@@ -162,16 +164,18 @@ AI 只能返回自己确认遵守的 `acknowledgedRestrictionIds`，不能新增
 
 所有理由必须引用可追踪 evidence，而不是复述成无法核对的自然语言。
 
-建议字段：
+当前 Swift domain 字段：
 
-- `evidenceId`
-- `category`：`objectiveMeasurement`、`userReportedFact`、`trainingResult`、`deterministicAssessment`
-- `origin`
+- `id`
+- `provenance`：`objectiveHealth`、`subjectiveUser`、`confirmedTraining`、`observedWorkout`、`deterministicRule`
+- `key`
 - `observedAt?`
 - `quality`：`confirmed`、`partial`、`missing`、`stale`
-- `payload`
+- `value?`：`JSONValue`，`quality = missing` 时必须为空
+- `source`
+- `note?`
 
-推荐 payload 类型：
+在 Gateway wire adapter 中，`key + value` 会转成受 schema 约束的类型化 payload，当前包括：
 
 - `quantity`：如睡眠 `6.33 h`、HRV `49.8 ms`
 - `userReport`：如 energy `low`、pain `limiting`
@@ -183,13 +187,16 @@ AI recommendation 内的每个 `evidenceId` 必须存在于当前 `TrainingConte
 
 ### 3.9 AIRecommendation 与 RecommendationReason
 
-V2 输出至少包含：
+V2 当前输出包含：
 
 - `schemaVersion = AIRecommendation.v2`
 - `recommendationId`
+- `requestId?`
+- `contextId?`
 - `kind`
-- `proposedPlan?` 或结构化 `proposedAdjustment?`
-- `rationale/reasons[]`
+- `recommendation`
+- `proposedPlan?`
+- `reasons[]`
 - `evidenceIds[]`
 - `confidence`
 - `uncertainties[]`
@@ -198,6 +205,7 @@ V2 输出至少包含：
 - `safetyConsiderations[]`
 - `acknowledgedRestrictionIds[]`
 - `userConfirmationRequired = true`
+- `inferenceMetadata?`
 
 每个 `RecommendationReason` 包含稳定 `code`、展示文本和 `evidenceIds[]`。
 
@@ -207,19 +215,19 @@ V2 输出至少包含：
 
 优先复用当前模型：
 
-- `TrainingPlanCandidate` 继续作为可审核、不可直接执行的计划候选。
+- `TrainingPlanCandidateV2` 作为可审核、不可直接执行的 V2 计划候选；原 `TrainingPlanCandidate` 仅保留 V1 兼容读取。
 - `TrainingOutcome` 不新建重复训练结果表；语义上复用 `TrainingSessionContract`。
-- 新增或扩展 `UserDecision`，记录 recommendation/candidate 与用户决定的关系。
+- `UserDecision` 记录 recommendation/candidate 与用户决定的关系。
 
-建议 `UserDecision` 字段：
+当前 `UserDecision` 字段：
 
 - `recommendationId`
 - `candidateId`
-- `decision`：`accepted`、`acceptedWithEdits`、`rejected`
+- `kind`：`accepted`、`acceptedWithEdits`、`rejected`
 - `decidedAt`
 - `acceptedPlanId?`
 - `acceptedPlanRevision?`
-- `userEdits[]`
+- `edits[]`：元素为 `PlanChange(path, before, after)`
 - `rejectionReason?`
 
 ## 4. 完整 Pipeline
@@ -353,16 +361,18 @@ V1 readiness 当前仍被 UI、趋势和 `LocalPlanEngine` 使用，因此不能
 
 ### Phase 2：影子比较
 
-- V1 和 V2 本地判断并行运行，但 V2 尚不改变正式计划。
-- 只记录规则版本、输入摘要、结论差异和原因，不记录敏感原始健康正文。
-- 对冲突、缺失、疼痛和进阶案例跑黄金回归集。
+状态：未实施。当前 V2 candidate 经用户采用后已能发布正式 plan revision，因此不能再把“V2 尚不改变正式计划”当作现状。若后续增加影子比较，它只是迁移可观测机制，不改变 V2 的发布权限边界。
+
+- [ ] 并行记录 V1 与 V2 规则版本、输入摘要、结论差异和原因，不记录敏感原始健康正文。
+- [ ] 对冲突、缺失、疼痛和进阶案例跑黄金回归集并保留差异记录。
 
 ### Phase 3：切换消费者
 
-- AI context 切换为 V2 evidence-only。
-- 候选审核 UI 改为展示具体客观信号、用户反馈、data gap 和本地 restriction。
-- 本地计划 gate 切换为 V2 safety/progression 结果。
-- readiness 趋势 UI 改为可解释信号与覆盖状态，不再突出单一分数。
+- [x] AI context 已切换为 V2 evidence-only。
+- [x] 候选审核 UI 实现已切换为展示具体客观信号、用户反馈、data gap 和本地 restriction。
+- [ ] V2 候选审核 UI 的 review/edit/accept/reject 专门自动化验收。
+- [ ] 将仍使用 V1 readiness 的 `LocalPlanEngine` 切换为 V2 safety/progression 结果。
+- [ ] 将 readiness 趋势 UI 改为可解释信号与覆盖状态，不再突出单一分数或 components score。
 
 ### Phase 4：停止写入与清理
 
@@ -471,7 +481,8 @@ V2 `TrainingPlanCandidateRecord` 会持久化完整 `TrainingPlanCandidateV2`，
 ### 10.5 UI、执行与结果
 
 - [x] 审核页分别展示 objective data、subjective feedback、local restrictions、AI reasons 和 uncertainty。
-- [x] 用户可以 review、edit、accept、reject；聚焦 UI 自动化已通过。
+- [x] review、edit、accept、reject 界面和模型操作已实现，候选采用、拒绝、编辑记录与回滚已有模型/集成测试。
+- [ ] V2 审核页 review、edit、accept、reject 的聚焦 UI 自动化验收。
 - [x] AI 不可用时当前计划、本地安全和训练执行继续可用。
 - [x] Watch target 只执行冻结 plan revision，训练中不调用 AI。
 - [x] `UserDecision`、已发布 plan 和 `TrainingSessionContract` lineage 可持久化和恢复。
@@ -484,7 +495,9 @@ V2 `TrainingPlanCandidateRecord` 会持久化完整 `TrainingPlanCandidateV2`，
 - [x] 已盘点 V1 score 的读取/写入点并保持兼容层。
 - [ ] V2 evidence 与 V1 shadow comparison 有回归记录。
 - [x] V2 AI context 已完成 score removal，且尚未接真实 Provider。
-- [ ] UI 和 local gate 切换后至少保留一个版本的旧 schema 兼容读取。
+- [x] V2 候选审核 UI 实现已使用 evidence/data gap/restriction，旧 candidate 仍可兼容读取和拒绝。
+- [ ] V2 候选审核 UI 专门自动化验收。
+- [ ] `LocalPlanEngine` 和 readiness 趋势 UI 迁移后，至少保留一个版本的旧 schema 兼容读取。
 - [ ] 停写前确认无活跃消费者；历史数据不被静默删除。
 
 ## 11. 回滚清单
@@ -504,8 +517,10 @@ V2 `TrainingPlanCandidateRecord` 会持久化完整 `TrainingPlanCandidateV2`，
 
 1. V2 结构和权限边界已落地，不只是新增类型名称。
 2. 十四个场景、核心 provenance/unknown/progression/safety/accept-time 边界有自动化测试证据。
-3. 用户可在 Stub Provider 环境走通“生成建议 -> 查看依据 -> 编辑/拒绝/采用 -> 训练结果回流”。
+3. Stub Provider 生成、候选创建/持久化/采用/回滚，以及已确认训练结果回流 future context 均有环节级集成测试证据。
 4. readiness score 已从 V2 AI context 移除，旧消费者保留兼容且不进入默认 AI 路径。
 5. 失败与回滚不破坏当前计划、训练执行或历史结果。
+
+当前证据是环节级集成覆盖，不应表述为已通过单条端到端全闭环。V2 审核页 UI 自动化，以及“Stub 生成 -> review/edit/accept/reject -> 训练执行 -> future context”的单条端到端用例仍是开发态验收待办。
 
 “生产 AI 可发布”仍需额外满足：真实 Provider 受控验证、Provider 超时/取消/熔断、生产认证、共享限流与幂等、标准 CI/Linux、VoiceOver/动态字体，以及 iPhone + Apple Watch 真机端到端验收。在这些门槛完成前，只能表述为“开发态 V2 已实现”，不能表述为“已具备生产级 AI 教练能力”。
