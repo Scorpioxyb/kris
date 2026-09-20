@@ -246,7 +246,7 @@ UserIntent
   -> Evidence Reference Validation
   -> TrainingPlan Domain Validation
   -> Safety / Progression Alignment Validation
-  -> TrainingPlanCandidate
+  -> TrainingPlanCandidateV2
   -> User Review / Edit / Accept / Reject
   -> Accept-time Freshness Revalidation
   -> Published TrainingPlan + immutable revision
@@ -409,7 +409,7 @@ Fallback 不得调用未经验证的“本地 AI 模板”冒充模型结果。�
 ```text
 TrainingContext.contextId
   -> AIRecommendation.recommendationId
-  -> TrainingPlanCandidate.candidateId
+  -> TrainingPlanCandidateV2.candidateId
   -> UserDecision(candidateId, recommendationId)
   -> TrainingPlan(planId, revision)
   -> TrainingSessionContract(sessionId, planId, planRevision)
